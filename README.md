@@ -1,4 +1,4 @@
-# Lista usuário consumindo API do GitHub
+# Listar usuário consumindo API do GitHub
 Nessa aplicação, uso como base o projeto desenvolvido por _Diego Fernandes_, no curso **Starter** (Rocketseat).
 
 ## Sobre a aplicação
