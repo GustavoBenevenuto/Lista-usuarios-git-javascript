@@ -2,11 +2,11 @@ import api from './api';
 
 class App {
     constructor() {
-        this.repositories = [];
+        this.users = [];
 
-        this.formEl = document.querySelector('#repo-form');
-        this.listEl = document.querySelector('#repo-list');
-        this.inputEl = document.querySelector('input[name=repository]')
+        this.formEl = document.querySelector('#users-form');
+        this.listEl = document.querySelector('#users-list');
+        this.inputEl = document.querySelector('input[name=users]')
 
         this.registerHandlers();
     }
@@ -14,26 +14,32 @@ class App {
     //Registrar os eventos
     registerHandlers() {
         this.formEl.onsubmit = (event) => {
-            this.addRepository(event);
+            this.addUsers(event);
         }
     }
 
-    async addRepository(event) {
+    async addUsers(event) {
         event.preventDefault();
 
-        const repoInput = this.inputEl.value;
+        const usersInput = this.inputEl.value;
 
-        if (repoInput.length === 0) return;
+        if (usersInput.length === 0) return;
 
         this.setLoadding();
         try {
-            const response = await api.get(`/users/${repoInput}`);
+            const response = await api.get(`/users/${usersInput}`);
 
             const { name: nome, bio, avatar_url, html_url } = response.data;
 
-            console.log(nome);
+            if (nome === null) {
+                this.inputEl.value = '';
+                alert('Usuário incomun');
+                this.setLoadding(false);
+                return;
+            }
 
-            this.repositories.push({
+
+            this.users.push({
                 nome: nome,
                 bio,
                 avatar_url,
@@ -42,49 +48,40 @@ class App {
 
             this.inputEl.value = '';
             this.render();
-        }catch(e){
+        } catch (e) {
             alert('Usuário não existe');
         }
         this.setLoadding(false);
     }
 
-    setLoadding(loadding = true){
-        if(loadding === true){
+    setLoadding(loadding = true) {
+        if (loadding === true) {
             const loaddingEl = document.createElement('span');
             loaddingEl.appendChild(document.createTextNode('Carregando...'));
-            loaddingEl.setAttribute('id','loadding');
+            loaddingEl.setAttribute('id', 'loadding');
 
             this.formEl.appendChild(loaddingEl);
-        }else{
-            document.querySelector('#loadding').remove();            
+        } else {
+            document.querySelector('#loadding').remove();
         }
     }
 
     render() {
         this.listEl.innerHTML = '';
 
-        this.repositories.forEach(repo => {
-            let imgEl = document.createElement('img');
-            imgEl.setAttribute('src', repo.avatar_url);
-
-            let titleEl = document.createElement('strong');
-            titleEl.appendChild(document.createTextNode(repo.nome));
-
-            let bioEl = document.createElement('p');
-            bioEl.appendChild(document.createTextNode(repo.bio));
-
-            let linkEl = document.createElement('a');
-            linkEl.setAttribute('target', '_blank');
-            linkEl.setAttribute('href', repo.html_url);
-            linkEl.appendChild(document.createTextNode("Acessar"));
-
-            let listaItemEl = document.createElement('li');
-            listaItemEl.appendChild(imgEl);
-            listaItemEl.appendChild(titleEl);
-            listaItemEl.appendChild(bioEl);
-            listaItemEl.appendChild(linkEl);
-
-            this.listEl.appendChild(listaItemEl);
+        this.users.forEach(users => {
+            this.listEl.innerHTML += `
+            <div class="card mb-3">
+                <div>
+                    <img src="${users.avatar_url}" class="card-img-top rounded mx-auto d-block" alt="...">
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">${users.nome}</h5>
+                    <p class="card-text">${users.bio}</p>
+                    <a href="${users.html_url}" target="_blank" >Acessar</a>
+                </div>
+            </div>
+            `
         });
     }
 }

@@ -1,47 +1,42 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ES6</title>
-    <style>
-        ul {
-            list-style: none;
-            margin: 0;
-            padding: 0;
-            font-family: sans-serif;
-        }
-
-        li {
-            clear: both;
-            margin-top: 20px;
-        }
-
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet"
+            href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+            integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
+            crossorigin="anonymous">
+        <title>ES6</title>
+        <style>
         img {
-            width: 80px;
-            float: left;
-            margin-right: 10px;
+            width: 150px !important;
+            margin-top: 5px !important;
         }
 
-        strong {
-            font-size: 20px;
-        }
-
-        p {
-            margin: 5px 0;
+        .btn-add{
+            margin-bottom: 20px;
         }
     </style>
-</head>
-<body>
-    <form id="repo-form">
-        <input type="text" name="repository"/>
-        <button type="submit">Adicionar</button>
-    </form>
+    </head>
+    <body>
+        <div class="container">
+            <h2 class="text-center mt-3"> Usuários GitHub </h2>
+            <form id="users-form">
+                <div class="form-group">
+                    <input type="text" class="form-control" name="users"
+                        placeholder="Digite o nome do usuário" />
+                </div>
 
-    <ul id="repo-list">
-        
-    </ul>
+                <button type="submit" class="btn btn-primary btn-add">Adicionar</button>
+            </form>
 
-    <script src="./bundle.js"></script>
-</body>
+            <div id="users-list">
+
+            </div>
+        </div>
+
+
+        <script src="./bundle.js"></script>
+    </body>
 </html>
